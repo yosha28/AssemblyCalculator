@@ -18,12 +18,27 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="assembly.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="orderslist.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="items.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AssemblyCalculator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="assembly.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="orderslist.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
