@@ -3,9 +3,9 @@
 
 
 Order::Order() {
-	int camcount=0;
-	char *camtype = NULL;
-	int cablecount = 0;
+	camcount=0;
+	*camtype = NULL;
+	cablecount = 0;
 }
 
 Order::~Order() {

@@ -9,9 +9,9 @@ struct orderslist {
 	orderslist *prev;
 };
 
-orderslist *order_itm_init();
-orderslist gotolast();
-orderslist *order_itm_input();
+void order_itm_init();
+//orderslist gotolast();
+//orderslist *order_itm_input();
 
 
 #endif
