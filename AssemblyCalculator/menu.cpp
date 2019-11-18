@@ -19,6 +19,7 @@ Menuitm::Menuitm()
 	itmwidth = 0;
 	is_visible = 1;
 	ischild = 0;
+	is_active = 0;
 }
 
 Menuitm::~Menuitm()
@@ -57,8 +58,30 @@ void Menu::show_menu_head(Menu *topmenu) {
 	consoleSetColors(clWhite, clBlack);
 }
 
-void Menu::show_drop_down()
+void Menu::show_drop_down(pmenu *menuaddr, pmenu *position)
 {
+	while (NULL != position->nextY) {    //make lower items visible
+		position->nextY->menuitm->is_visible = true;
+		position = position->nextY;
+	}
+	menu_print(menuaddr); //reprint menu
+}
+
+void Menu::hide_drop_down(pmenu *menuaddr, pmenu *position)
+{
+	while (NULL != position->prevY) {  //rewind to up
+		position = position->prevY;
+	}
+	while (NULL != position->nextY) {    //make lower items invisible
+		position->nextY->menuitm->is_visible = false;
+		position = position->nextY;
+	}
+
+	menu_print(menuaddr); //reprint menu
+}
+
+void Menu::burn_current(pmenu *position) {
+
 }
 
 void Menu::menu_itm_print(pmenu *itemaddr) {
@@ -72,6 +95,10 @@ void Menu::menu_itm_print(pmenu *itemaddr) {
 			consoleSetColors(clBlack, clMagenta);
 		}
 
+		if (itemaddr->menuitm->is_active) {
+			consoleSetColors(clBlack, clLightRed);
+		}
+
 		for (int w = 0; w <= itemaddr->menuitm->itmwidth; w++) {
 			for (int h = 0; h <= 2; h++) {
 				posmove(itemaddr->menuitm->itmposX + w, itemaddr->menuitm->itmposY + h);
@@ -81,26 +108,104 @@ void Menu::menu_itm_print(pmenu *itemaddr) {
 		posmove(itemaddr->menuitm->itmposX + 2, itemaddr->menuitm->itmposY + 1);
 		printf("%s", itemaddr->menuitm->itemname);
 	}
+	else {
+		consoleSetColors(clBlack, clBlack);
+		for (int w = 0; w <= itemaddr->menuitm->itmwidth; w++) {
+			for (int h = 0; h <= 2; h++) {
+				posmove(itemaddr->menuitm->itmposX + w, itemaddr->menuitm->itmposY + h);
+				printf(" ");
+			}
+		}
+
+	}
 }
 
-int Menu::menu_navigate()
+int Menu::menu_navigate(pmenu *menuaddr)
 {
-	int keyPressed = _getch();
+	menu_print(menuaddr);
+	pmenu *position = menuaddr;
+	int goout = 0;
 
-	switch (keyPressed)
-	{
-	case KEY_UP:
+	do {
+		posmove(0, 0);
+		int keyPressed = _getch();
 
-	default:
-		break;
-	}
-	return 0;
+		switch (keyPressed)
+		{
+		case KEY_UP:
+			if (NULL != position->prevY) {
+				position->menuitm->is_active = false;
+				menu_itm_print(position);
+				position = position->prevY;
+				position->menuitm->is_active = true;
+				menu_itm_print(position);
+				if (NULL == position->prevY)
+					hide_drop_down(menuaddr, position);
+			}
+			break;
+		case KEY_DOWN:
+			if (NULL != position->nextY) {
+				if (NULL == position->prevY) {          // check if upper - expand lower items
+					show_drop_down(menuaddr, position);
+				}
+				position->menuitm->is_active = false;
+				menu_itm_print(position);
+				position = position->nextY;
+				position->menuitm->is_active = true;
+				menu_itm_print(position);
+			}
+			break;
+		case KEY_RIGHT:
+			
+			if (NULL == position->prevY) {
+				hide_drop_down(menuaddr, position);
+				position->menuitm->is_active = false;
+				menu_itm_print(position);
+				position = position->nextX;
+
+				if (NULL == position->prevY) {          // check if upper - expand lower items
+					show_drop_down(menuaddr, position);
+				}
+				position->menuitm->is_active = true;
+				menu_itm_print(position);
+			}
+			break;
+		case KEY_LEFT:
+			
+			if (NULL == position->prevY) {
+				hide_drop_down(menuaddr, position);
+				position->menuitm->is_active = false;
+				menu_itm_print(position);
+				position = position->prevX;
+
+				if (NULL == position->prevY) {          // check if upper - expand lower items
+					show_drop_down(menuaddr, position);
+				}
+				position->menuitm->is_active = true;
+				menu_itm_print(position);
+			}
+			break;
+		case KEY_ENTER:
+			hide_drop_down(menuaddr, position);
+			goout = 1;
+			break;
+		default:
+			position->menuitm->is_active = true;
+			menu_itm_print(position);
+			break;
+		}
+	} while (goout != 1);
+
+	position->menuitm->is_active = false;
+	return position->menuitm->itemcode;
 }
 
 pmenu *Menu::menu_create() //Fill menu items
 {
+
 	pmenu *startadr = NULL;
 	int psize = 0;
+	int code = 0;
 
 	for (int x = 0, y = 0; y <= 2; y++) {              //take max parent menu name as base width
 		int pwidth = strlen(menuitems[x][y]);
@@ -145,7 +250,8 @@ pmenu *Menu::menu_create() //Fill menu items
 			char *mem = (char*)malloc(100 * (sizeof(char)));
 			strcpy_s(mem, 100, menuitems[x][y]);
 			curitm->menuitm->itemname = mem;
-			curitm->menuitm->itemcode = x + y;
+			curitm->menuitm->itemcode = code;
+			code++;
 
 			curitm->menuitm->itmposX = 20 + (x * psize); // x offset
 			curitm->menuitm->itmposY = y * 3;            // y offset 
@@ -179,7 +285,6 @@ pmenu *Menu::menu_create() //Fill menu items
 	return startadr;
 }
 
-
 void Menu::menu_print(pmenu *startaddr) {
 	pmenu *currentX = startaddr->prevX;
 	pmenu *currentY = currentX;
@@ -197,7 +302,6 @@ void Menu::menu_print(pmenu *startaddr) {
 
 	} while (currentX->nextX != startaddr);
 }
-
 
 
 void consoleSetColors(ConsoleColors textColor, ConsoleColors backgroundColor) {  //setting console colors

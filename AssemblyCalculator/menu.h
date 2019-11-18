@@ -5,7 +5,7 @@
 #define KEY_DOWN      80
 #define KEY_LEFT      75
 #define KEY_RIGHT     77
-
+#define KEY_ENTER     13  
 
 
 enum ConsoleColors {      // LRGB LRGB    Light Reg Green Blue 
@@ -39,6 +39,7 @@ public:
 	short itmwidth;
 	bool is_visible;
 	bool ischild;
+	bool is_active;
 
 protected:
 }; 
@@ -61,23 +62,19 @@ public:
 	Menu();
 	~Menu();
 	void show_menu_head(Menu*);
-	void show_drop_down();
+	void show_drop_down(pmenu *, pmenu *);
+	void hide_drop_down(pmenu *, pmenu *);
+	void burn_current(pmenu * position);
 	short posX;
 	short posY;
 	pmenu * menu_create();
 	void menu_print(pmenu *);
 	void menu_itm_print(pmenu *);
-	int menu_navigate();
+	int menu_navigate(pmenu *);
 
 protected:
 
 };
-
-
-
-
-
-
 
 void posmove(short x, short y);
 void consoleSetColors(ConsoleColors textColor, ConsoleColors backgroundColor);
