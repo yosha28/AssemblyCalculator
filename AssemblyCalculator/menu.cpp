@@ -214,7 +214,6 @@ pmenu *Menu::menu_create() //Fill menu items
 	}
 
 	pmenu *curitm = NULL;
-	/*pmenu *previtmY = NULL;*/
 	pmenu *previtmX = NULL;
 	pmenu *ptemp = NULL;
 
@@ -302,7 +301,6 @@ void Menu::menu_print(pmenu *startaddr) {
 
 	} while (currentX->nextX != startaddr);
 }
-
 
 void consoleSetColors(ConsoleColors textColor, ConsoleColors backgroundColor) {  //setting console colors
 	HANDLE hCons = GetStdHandle(STD_OUTPUT_HANDLE);

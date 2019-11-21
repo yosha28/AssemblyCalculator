@@ -2,6 +2,7 @@
 #define ORDERSLIST_H
 
 #include "assembly.h"
+//#include "items.h"
 
 struct orderslist {
 	Order *order;
@@ -9,9 +10,10 @@ struct orderslist {
 	orderslist *prev;
 };
 
-void order_itm_init();
+
+orderslist *order_itm_init(orderslist*);
+orderslist *order_itm_input(orderslist * lastorder);
 //orderslist gotolast();
 //orderslist *order_itm_input();
-
 
 #endif
