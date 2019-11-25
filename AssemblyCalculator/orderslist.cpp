@@ -7,18 +7,12 @@
 #include "assembly.h"
 #include "items.h"
 #include "menu.h"
+#include <time.h>
 
-#define L_FIELD 4
-#define C_FIELD 50
-#define R_FIELD 100
 
-//struct orderslist {
-//	Order *order;
-//	orderslist *next;
-//	orderslist *prev;
-//};
 
-orderslist *order_itm_init() {
+
+orderslist *Order_itm_init() {
 	orderslist *itm = NULL;
 	itm = (orderslist*)malloc(sizeof(struct orderslist));
 	itm->order = NULL;
@@ -27,41 +21,57 @@ orderslist *order_itm_init() {
 	return (itm);
 
 }
-//
-//orderslist gotolast() {
-//	return (*order_itm_init());
-//}
-//
 
-orderslist *order_itm_input(orderslist * lastorder) {
+void order_itm_delete(orderslist *newodr) {
+	free(newodr);
+}
+
+orderslist *Order_itm_input(orderslist * lastorder) {
 	int h = L_FIELD;
 	int v = 20;
-	posmove(4, 15);
+	posmove(L_FIELD, 15);
 	consoleSetColors(clWhite, clBlack);
-	printf("ORDER INPUT");
-
-	orderslist *newodr = order_itm_init();
+	
+	orderslist *newodr = Order_itm_init();
 
 	Order *porder = new Order;
 	newodr->order = porder;
 
-	if (NULL != lastorder) {
-		newodr->prev = lastorder;
-		lastorder->next = newodr;
-	}
+	newodr->order->ordernum = porder->Order_number_gen();
+	printf("ORDER INPUT  # %d", newodr->order->ordernum);
 
-	
-
-	for (int i = 0; i <= 4; i++) {
+	for (int i = 0; i <= 5; i++) {
 
 		(porder->*porder->pfunc[i])(porder, h, 20 + (i * 2));
 
 	}
 
-	return newodr;
+
+	do {
+		posmove(R_FIELD, 20 + (6 * 2));
+		printf("Save order? y/n - ");
+		char yesno = ' ';
+		scanf_s("%c", &yesno);
+
+		if (yesno == 'y' || yesno == 'Y') {
+			if (NULL != lastorder) {
+				newodr->prev = lastorder;
+				lastorder->next = newodr;
+
+			}
+			return newodr;
+		}
+		else if (yesno == 'n' || yesno == 'N') {
+			delete porder;
+			order_itm_delete(newodr);
+			return lastorder;
+
+		}
+	} while (1);
+
 }
 
-void Order::cam_quant_input(Order* noaddr, int h, int v) {
+void Order::Cam_quant_input(Order* noaddr, int h, int v) {
 	posmove(h, v);
 	printf("Input cam quantity - ");
 	int camq = 0;
@@ -71,7 +81,7 @@ void Order::cam_quant_input(Order* noaddr, int h, int v) {
 	printf("Order cam quantity - %d", noaddr->camcount);
 }
 
-void Order::cam_type_input(Order* noaddr, int h, int v) {
+void Order::Cam_type_input(Order* noaddr, int h, int v) {
 	int camt = 0;                  //input cam type
 	do {
 		posmove(h, v);
@@ -87,7 +97,7 @@ void Order::cam_type_input(Order* noaddr, int h, int v) {
 	printf("Order cam type - %s", noaddr->camtype);
 }
 
-void Order::register_input(Order* noaddr, int h, int v)
+void Order::Register_input(Order* noaddr, int h, int v)
 {
 	int exit = 0;
 	int regq_c = 0;
@@ -148,7 +158,7 @@ void Order::register_input(Order* noaddr, int h, int v)
 	} while (exit != 1);  //not nessesary logic but i will leave it here)
 }
 
-void Order::hdd_input(Order *noaddr, int h, int v)
+void Order::Hdd_input(Order *noaddr, int h, int v)
 {
 	posmove(h, v);
 	printf("Input HDD quantity - ");
@@ -160,11 +170,11 @@ void Order::hdd_input(Order *noaddr, int h, int v)
 
 }
 
-void Order::cable_box_input(Order *noaddr, int h, int v) {
+void Order::Cable_box_input(Order *noaddr, int h, int v) {
 
 	int box_lenght = 0;
 	int cab_lenght = 0;
-	int bratio =0;
+	int bratio = 0;
 
 	posmove(h, v);
 	printf("Input cable lenght in m.- ");
@@ -180,5 +190,105 @@ void Order::cable_box_input(Order *noaddr, int h, int v) {
 	printf("Order cable lenght %d m. and box lenght %d m. ", cab_lenght, box_lenght);
 	noaddr->cablelenght = cab_lenght;
 	noaddr->boxlenght = box_lenght;
-	
+
 }
+
+void Order::Switch_input(Order* noaddr, int h, int v)
+{
+	float sw_q = (noaddr->register_q + noaddr->camcount + 1); //suggest switch config
+	int  switch_chan_q = (ceil(sw_q / 4) * 4);
+
+	for (int a = 32; a >= 4; ) {
+		while (switch_chan_q >= a) {
+			(noaddr->switchtype[a - 1])++;
+			switch_chan_q = switch_chan_q - a;
+		}
+		a = a / 2;
+	}
+	
+
+	posmove(h, v);
+	printf("Suggested Poe switch config: ");                    //print suggestion
+
+	for (int a = 32; a >= 4; ) {
+		if (switchtype[a - 1] != 0) {
+			printf("%d x %dch , ", switchtype[a - 1], a);
+		}
+		a = a / 2;
+	}
+
+	int yesno = 0;
+	int exit = 0;
+
+	while (1) {
+		posmove(h + C_FIELD, v);
+		printf("Is it right? - y/n ? - ");
+
+		scanf_s("%c", &yesno);
+		if (yesno == 'n' || yesno == 'N') {
+			posmove(h + C_FIELD, v);
+
+			for (int a = 32; a >= 4; ) {
+				posmove(h + C_FIELD, v);
+				printf("                                           ", a);
+				posmove(h + C_FIELD, v);
+				printf("How many %d channels switch You need? - ", a);
+				int nvrq = 0;
+				scanf_s("%d", &nvrq);
+				noaddr->switchtype[a - 1] = nvrq;
+				a = a / 2;
+			}
+
+
+		}
+		else if (yesno == 'y' || yesno == 'y') {
+			break;
+		}
+		else {
+			posmove(h + R_FIELD, v);
+			printf("Answer Y  or  N !!!               ");
+		}
+	}
+
+	posmove(h + R_FIELD, v);
+	printf("Order will include ");
+	for (int a = 32; a >= 4; ) {
+		if (switchtype[a - 1] != 0) {
+			printf("%d x %dch , ", switchtype[a - 1], a);
+		}
+		a = a / 2;
+	}
+	printf("switch");
+
+}
+
+int Order::Order_number_gen() {
+	char *gen = (char*)malloc(16 * sizeof(char));
+	char *pf = gen;
+	int i = 0;
+	char buff[26];
+	time_t sec = time(NULL);
+	ctime_s(buff, sizeof(buff), &sec);
+	while (buff[i] != '\n') {
+		char c = buff[i];
+		if (c >= 48 && c <= 57) {
+
+			*gen = buff[i];
+			gen++;
+			
+		}
+		*gen = '\0';
+		i++;
+	}
+	int nummer = atoi(pf);
+	return nummer;
+}
+
+orderslist *Orders_goto_first(orderslist* lastord) {
+	orderslist *result = lastord;
+	while (result->prev != NULL) {
+		result = result->prev;
+	}
+	return result;
+}
+

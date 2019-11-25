@@ -11,6 +11,7 @@ const char *menuitems[3][3] = {
 "Calculations","By date","By storage",
 "Output","To file","Print" };
 
+
 Menuitm::Menuitm()
 {
 	itemname = NULL;
@@ -42,7 +43,7 @@ Menu::~Menu() {
 
 }
 
-void Menu::show_menu_head(Menu *topmenu) {
+void Menu::Show_menu_head(Menu *topmenu) {
 	/*Menu *topmenu = new Menu;*/
 	for (short x = 0; x < topmenu->width; x++) {
 		for (short y = 0; y < topmenu->height; y++) {
@@ -58,16 +59,16 @@ void Menu::show_menu_head(Menu *topmenu) {
 	consoleSetColors(clWhite, clBlack);
 }
 
-void Menu::show_drop_down(pmenu *menuaddr, pmenu *position)
+void Menu::Show_drop_down(pmenu *menuaddr, pmenu *position)
 {
 	while (NULL != position->nextY) {    //make lower items visible
 		position->nextY->menuitm->is_visible = true;
 		position = position->nextY;
 	}
-	menu_print(menuaddr); //reprint menu
+	Menu_print(menuaddr); //reprint menu
 }
 
-void Menu::hide_drop_down(pmenu *menuaddr, pmenu *position)
+void Menu::Hide_drop_down(pmenu *menuaddr, pmenu *position)
 {
 	while (NULL != position->prevY) {  //rewind to up
 		position = position->prevY;
@@ -77,14 +78,14 @@ void Menu::hide_drop_down(pmenu *menuaddr, pmenu *position)
 		position = position->nextY;
 	}
 
-	menu_print(menuaddr); //reprint menu
+	Menu_print(menuaddr); //reprint menu
 }
 
-void Menu::burn_current(pmenu *position) {
+void Menu::Burn_current(pmenu *position) {
 
 }
 
-void Menu::menu_itm_print(pmenu *itemaddr) {
+void Menu::Menu_itm_print(pmenu *itemaddr) {
 	if (itemaddr->menuitm->is_visible == true) {
 		if (itemaddr->menuitm->ischild == true)
 		{
@@ -120,9 +121,11 @@ void Menu::menu_itm_print(pmenu *itemaddr) {
 	}
 }
 
-int Menu::menu_navigate(pmenu *menuaddr)
+int Menu::Menu_navigate(pmenu *menuaddr)
 {
-	menu_print(menuaddr);
+
+
+	Menu_print(menuaddr);
 	pmenu *position = menuaddr;
 	int goout = 0;
 
@@ -135,63 +138,63 @@ int Menu::menu_navigate(pmenu *menuaddr)
 		case KEY_UP:
 			if (NULL != position->prevY) {
 				position->menuitm->is_active = false;
-				menu_itm_print(position);
+				Menu_itm_print(position);
 				position = position->prevY;
 				position->menuitm->is_active = true;
-				menu_itm_print(position);
+				Menu_itm_print(position);
 				if (NULL == position->prevY)
-					hide_drop_down(menuaddr, position);
+					Hide_drop_down(menuaddr, position);
 			}
 			break;
 		case KEY_DOWN:
 			if (NULL != position->nextY) {
 				if (NULL == position->prevY) {          // check if upper - expand lower items
-					show_drop_down(menuaddr, position);
+					Show_drop_down(menuaddr, position);
 				}
 				position->menuitm->is_active = false;
-				menu_itm_print(position);
+				Menu_itm_print(position);
 				position = position->nextY;
 				position->menuitm->is_active = true;
-				menu_itm_print(position);
+				Menu_itm_print(position);
 			}
 			break;
 		case KEY_RIGHT:
 			
 			if (NULL == position->prevY) {
-				hide_drop_down(menuaddr, position);
+				Hide_drop_down(menuaddr, position);
 				position->menuitm->is_active = false;
-				menu_itm_print(position);
+				Menu_itm_print(position);
 				position = position->nextX;
 
 				if (NULL == position->prevY) {          // check if upper - expand lower items
-					show_drop_down(menuaddr, position);
+					Show_drop_down(menuaddr, position);
 				}
 				position->menuitm->is_active = true;
-				menu_itm_print(position);
+				Menu_itm_print(position);
 			}
 			break;
 		case KEY_LEFT:
 			
 			if (NULL == position->prevY) {
-				hide_drop_down(menuaddr, position);
+				Hide_drop_down(menuaddr, position);
 				position->menuitm->is_active = false;
-				menu_itm_print(position);
+				Menu_itm_print(position);
 				position = position->prevX;
 
 				if (NULL == position->prevY) {          // check if upper - expand lower items
-					show_drop_down(menuaddr, position);
+					Show_drop_down(menuaddr, position);
 				}
 				position->menuitm->is_active = true;
-				menu_itm_print(position);
+				Menu_itm_print(position);
 			}
 			break;
 		case KEY_ENTER:
-			hide_drop_down(menuaddr, position);
+			Hide_drop_down(menuaddr, position);
 			goout = 1;
 			break;
 		default:
 			position->menuitm->is_active = true;
-			menu_itm_print(position);
+			Menu_itm_print(position);
 			break;
 		}
 	} while (goout != 1);
@@ -200,7 +203,7 @@ int Menu::menu_navigate(pmenu *menuaddr)
 	return position->menuitm->itemcode;
 }
 
-pmenu *Menu::menu_create() //Fill menu items
+pmenu *Menu::Menu_create() //Fill menu items
 {
 
 	pmenu *startadr = NULL;
@@ -284,16 +287,16 @@ pmenu *Menu::menu_create() //Fill menu items
 	return startadr;
 }
 
-void Menu::menu_print(pmenu *startaddr) {
+void Menu::Menu_print(pmenu *startaddr) {
 	pmenu *currentX = startaddr->prevX;
 	pmenu *currentY = currentX;
 	do {
 		currentY = currentX;
-		menu_itm_print(currentY);
+		Menu_itm_print(currentY);
 
 		do {
 			currentY = currentY->nextY;
-			menu_itm_print(currentY);
+			Menu_itm_print(currentY);
 
 		} while (NULL != currentY->nextY);
 

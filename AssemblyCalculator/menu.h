@@ -27,6 +27,8 @@ enum ConsoleColors {      // LRGB LRGB    Light Reg Green Blue
 	, clWhite = 15  // 0000 1111
 };
 
+
+
 class Menuitm {
 private:
 public:
@@ -61,16 +63,17 @@ private:
 public:
 	Menu();
 	~Menu();
-	void show_menu_head(Menu*);
-	void show_drop_down(pmenu *, pmenu *);
-	void hide_drop_down(pmenu *, pmenu *);
-	void burn_current(pmenu * position);
+	void Show_menu_head(Menu*);
+	void Show_drop_down(pmenu *, pmenu *);
+	void Hide_drop_down(pmenu *, pmenu *);
+	void Burn_current(pmenu * position);
 	short posX;
 	short posY;
-	pmenu * menu_create();
-	void menu_print(pmenu *);
-	void menu_itm_print(pmenu *);
-	int menu_navigate(pmenu *);
+	pmenu *Menu_create();
+	void Menu_print(pmenu *);
+
+	void Menu_itm_print(pmenu *);
+	int Menu_navigate(pmenu *);
 
 protected:
 
