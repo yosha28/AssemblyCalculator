@@ -262,13 +262,14 @@ void Order::Switch_input(Order* noaddr, int h, int v)
 
 }
 
-int Order::Order_number_gen() {
+long Order::Order_number_gen() {
 	char *gen = (char*)malloc(16 * sizeof(char));
 	char *pf = gen;
-	int i = 0;
+	int i = 17;  //cut of genersted num
 	char buff[26];
 	time_t sec = time(NULL);
 	ctime_s(buff, sizeof(buff), &sec);
+	
 	while (buff[i] != '\n') {
 		char c = buff[i];
 		if (c >= 48 && c <= 57) {
@@ -280,7 +281,7 @@ int Order::Order_number_gen() {
 		*gen = '\0';
 		i++;
 	}
-	int nummer = atoi(pf);
+	long nummer = atoi(pf);
 	return nummer;
 }
 
@@ -292,3 +293,10 @@ orderslist *Orders_goto_first(orderslist* lastord) {
 	return result;
 }
 
+void Camtype_fill(Order* whord, const char *pword) {
+	for (int g = 0; g <= 2; g++) {
+		if (strcmp(pword, camtypes[g]) == 0) {
+			whord->camtype = camtypes[g];
+		}
+	}
+}

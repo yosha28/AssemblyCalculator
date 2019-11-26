@@ -6,7 +6,7 @@
 #define KEY_LEFT      75
 #define KEY_RIGHT     77
 #define KEY_ENTER     13  
-
+#define KEY_ESCAPE    27
 
 enum ConsoleColors {      // LRGB LRGB    Light Reg Green Blue 
 	clBlack = 0  // 0000 0000
@@ -71,7 +71,6 @@ public:
 	short posY;
 	pmenu *Menu_create();
 	void Menu_print(pmenu *);
-
 	void Menu_itm_print(pmenu *);
 	int Menu_navigate(pmenu *);
 

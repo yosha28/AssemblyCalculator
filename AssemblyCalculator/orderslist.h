@@ -2,7 +2,7 @@
 #define ORDERSLIST_H
 
 #include "assembly.h"
-//#include "items.h"
+
 
 #define L_FIELD 4   //left fileld
 #define C_FIELD 50  //central field
@@ -15,11 +15,11 @@ struct orderslist {
 };
 
 
-orderslist *Order_itm_init(orderslist*);
+orderslist *Order_itm_init();
 orderslist *Order_itm_input(orderslist * lastorder);
 orderslist *Orders_goto_first(orderslist *lastord);
 void order_itm_delete(orderslist *newodr);
-//orderslist gotolast();
-//orderslist *order_itm_input();
+void Camtype_fill(Order* whord, const char *pword);
+
 
 #endif

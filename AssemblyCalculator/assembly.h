@@ -13,7 +13,7 @@ private:
 public:
 	Order();
 	~Order();
-	int ordernum;
+	long ordernum;
 	int camcount;
 	const char *camtype;
 	int cablelenght;
@@ -24,24 +24,19 @@ public:
 	int switchtype[32];
 
 	void (Order::*pfunc[6])(Order*, int, int);
-	int Order_number_gen();
+	long Order_number_gen();
 
 protected:
 
 	void Cam_quant_input(Order*, int, int);
 	void Cam_type_input(Order*, int, int);
-
 	void Register_input(Order*, int, int);
 	void Hdd_input(Order*, int, int);
 	void Cable_box_input(Order*, int, int);
 	void Switch_input(Order *, int, int);
 	
 
-	
-	
-	//void cam_type_input(Order*, int, int);
-	//void cam_type_input(Order*, int, int);
-	//void cam_type_input(Order*, int, int);
+
 
 };
 
