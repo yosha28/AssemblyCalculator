@@ -31,7 +31,7 @@ orderslist *Order_itm_input(orderslist * lastorder) {
 	int v = 20;
 	posmove(L_FIELD, 15);
 	consoleSetColors(clWhite, clBlack);
-	
+
 	orderslist *newodr = Order_itm_init();
 
 	Order *porder = new Order;
@@ -205,7 +205,7 @@ void Order::Switch_input(Order* noaddr, int h, int v)
 		}
 		a = a / 2;
 	}
-	
+
 
 	posmove(h, v);
 	printf("Suggested Poe switch config: ");                    //print suggestion
@@ -217,7 +217,7 @@ void Order::Switch_input(Order* noaddr, int h, int v)
 		a = a / 2;
 	}
 
-	int yesno = 0;
+	char yesno = 0;
 	int exit = 0;
 
 	while (1) {
@@ -269,14 +269,14 @@ long Order::Order_number_gen() {
 	char buff[26];
 	time_t sec = time(NULL);
 	ctime_s(buff, sizeof(buff), &sec);
-	
+
 	while (buff[i] != '\n') {
 		char c = buff[i];
 		if (c >= 48 && c <= 57) {
 
 			*gen = buff[i];
 			gen++;
-			
+
 		}
 		*gen = '\0';
 		i++;
@@ -284,6 +284,8 @@ long Order::Order_number_gen() {
 	long nummer = atoi(pf);
 	return nummer;
 }
+
+
 
 orderslist *Orders_goto_first(orderslist* lastord) {
 	orderslist *result = lastord;
@@ -298,5 +300,16 @@ void Camtype_fill(Order* whord, const char *pword) {
 		if (strcmp(pword, camtypes[g]) == 0) {
 			whord->camtype = camtypes[g];
 		}
+	}
+}
+
+void Free_orders(orderslist * lastorder)
+{
+	if (lastorder != NULL) {
+		do {
+			delete(lastorder->order);
+			lastorder = lastorder->prev;
+			free(lastorder->next);
+		} while (lastorder->prev != NULL);
 	}
 }

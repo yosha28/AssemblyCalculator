@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
 	abs = abs - l;
 	int k = l - 18;
 
-	char *abspath = (char*)malloc((k) * sizeof(char));  //absolute path
+	char *abspath = (char*)malloc((k+1) * sizeof(char));  //absolute path
 	char *ordpath = (char*)malloc((k + 11) * sizeof(char)); //orders path
 	char *gdspath = (char*)malloc((k + 10) * sizeof(char)); //goods path
 
@@ -42,11 +42,11 @@ int main(int argc, char* argv[])
 	topmenu->Show_menu_head(topmenu);
 	topmenu->Menu_print(addr);
 	bool* readflg = new bool(false); //reading file base flag
-	bool* exitflg = new bool(false); //reading file base flag
+	bool* exitflg = new bool(false); 
 
-	while (exitflg == false) {
+	while (*exitflg == false) {
 
-		switch (int c = topmenu->Menu_navigate(addr))
+		switch (int c = topmenu->Menu_navigate(addr,exitflg))
 			{
 
 		case 1:
@@ -77,6 +77,9 @@ int main(int argc, char* argv[])
 	}
 
 	posmove(0, 40); 
+
+	Free_orders(lastorder);  //clear orders
+	topmenu->Free_menu(addr); //clear menus
 
 	free(abspath);
 	free(ordpath);

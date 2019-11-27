@@ -72,7 +72,8 @@ public:
 	pmenu *Menu_create();
 	void Menu_print(pmenu *);
 	void Menu_itm_print(pmenu *);
-	int Menu_navigate(pmenu *);
+	int Menu_navigate(pmenu *, bool*);
+	void Free_menu(pmenu*);
 
 protected:
 

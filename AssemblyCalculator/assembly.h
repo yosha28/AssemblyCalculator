@@ -25,6 +25,7 @@ public:
 
 	void (Order::*pfunc[6])(Order*, int, int);
 	long Order_number_gen();
+	
 
 protected:
 
@@ -35,9 +36,6 @@ protected:
 	void Cable_box_input(Order*, int, int);
 	void Switch_input(Order *, int, int);
 	
-
-
-
 };
 
 

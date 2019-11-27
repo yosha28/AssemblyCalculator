@@ -121,13 +121,14 @@ void Menu::Menu_itm_print(pmenu *itemaddr) {
 	}
 }
 
-int Menu::Menu_navigate(pmenu *menuaddr)
+int Menu::Menu_navigate(pmenu *menuaddr, bool *exitflg)
 {
 
 
 	Menu_print(menuaddr);
 	pmenu *position = menuaddr;
 	int goout = 0;
+	char answer = 'n';
 
 	do {
 		posmove(0, 0);
@@ -192,6 +193,15 @@ int Menu::Menu_navigate(pmenu *menuaddr)
 			Hide_drop_down(menuaddr, position);
 			goout = 1;
 			break;
+		case KEY_ESCAPE:
+			consoleSetColors(clWhite, clBlack);
+			posmove(4, 15);
+			printf("Do u wanna exit ? y/n -");
+			scanf_s("%c", &answer);
+			 if(answer == 'y')
+				*exitflg = true;
+			goout = 1;
+			break;
 		default:
 			position->menuitm->is_active = true;
 			Menu_itm_print(position);
@@ -202,6 +212,27 @@ int Menu::Menu_navigate(pmenu *menuaddr)
 	position->menuitm->is_active = false;
 	return position->menuitm->itemcode;
 
+
+}
+
+void Menu::Free_menu(pmenu *menuaddr)
+{
+	pmenu *start = menuaddr;
+	pmenu *rnext = NULL;
+	do {
+		pmenu *rnext = menuaddr->nextX;
+		do {
+			
+			delete(menuaddr->menuitm);
+			menuaddr = menuaddr->nextY;
+			free(menuaddr->prevY);
+
+		} while (menuaddr->nextY != NULL);
+		delete(menuaddr->menuitm);
+		free(menuaddr);
+
+		menuaddr = rnext;
+	} while (menuaddr != start);
 
 }
 
@@ -306,6 +337,8 @@ void Menu::Menu_print(pmenu *startaddr) {
 
 	} while (currentX->nextX != startaddr);
 }
+
+
 
 void consoleSetColors(ConsoleColors textColor, ConsoleColors backgroundColor) {  //setting console colors
 	HANDLE hCons = GetStdHandle(STD_OUTPUT_HANDLE);
