@@ -32,7 +32,8 @@ packs *Bruteforce(orderslist *lastorder, Storage *ms) {
 	int numpassed = 1; //1 cos first order is allways in
 	int maxfound = 0;
 
-	orderslist *orderfirst = Orders_goto_first(lastorder);
+	orderslist *orderfirst = NULL; //cos "potentially uninitialized local pointer variable 'orderfirst' used	" says release
+	orderfirst = Orders_goto_first(lastorder);
 
 	while (orderfirst != NULL) {
 

@@ -217,7 +217,7 @@ void Menu::Quit_menu(bool *exitflg) {
 	posmove(4, 15);
 	printf("Do u wanna exit ? y/n -");
 	scanf_s("%c", &answer);
-	if (answer == 'y')
+	if (answer == 'y' || answer == 'Y')
 		*exitflg = true;
 }
 
