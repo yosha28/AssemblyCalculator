@@ -128,7 +128,7 @@ int Menu::Menu_navigate(pmenu *menuaddr, bool *exitflg)
 	Menu_print(menuaddr);
 	pmenu *position = menuaddr;
 	int goout = 0;
-	char answer = 'n';
+	
 
 	do {
 		posmove(0, 0);
@@ -194,13 +194,9 @@ int Menu::Menu_navigate(pmenu *menuaddr, bool *exitflg)
 			goout = 1;
 			break;
 		case KEY_ESCAPE:
-			consoleSetColors(clWhite, clBlack);
-			posmove(4, 15);
-			printf("Do u wanna exit ? y/n -");
-			scanf_s("%c", &answer);
-			 if(answer == 'y')
-				*exitflg = true;
-			goout = 1;
+			return 22;
+
+			//goout = 1;
 			break;
 		default:
 			position->menuitm->is_active = true;
@@ -213,6 +209,16 @@ int Menu::Menu_navigate(pmenu *menuaddr, bool *exitflg)
 	return position->menuitm->itemcode;
 
 
+};
+
+void Menu::Quit_menu(bool *exitflg) {
+	char answer = 'n';
+	consoleSetColors(clYellow, clBlack);
+	posmove(4, 15);
+	printf("Do u wanna exit ? y/n -");
+	scanf_s("%c", &answer);
+	if (answer == 'y')
+		*exitflg = true;
 }
 
 void Menu::Free_menu(pmenu *menuaddr)

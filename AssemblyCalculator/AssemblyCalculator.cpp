@@ -86,6 +86,11 @@ int main(int argc, char* argv[])
 			topmenu->Show_menu_head(topmenu);
 			Out_to_screen(lastorder);
 			break;
+		case 22:
+			system("CLS");
+			topmenu->Show_menu_head(topmenu);
+			topmenu->Quit_menu(exitflg);
+			break;
 		default:
 			posmove(20, 20);
 			consoleSetColors(clWhite, clBlack);

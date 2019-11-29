@@ -38,7 +38,9 @@ orderslist *Order_itm_input(orderslist * lastorder) {
 	newodr->order = porder;
 
 	newodr->order->ordernum = porder->Order_number_gen();
+	consoleSetColors(clLightGreen, clBlack);
 	printf("ORDER INPUT  # %d", newodr->order->ordernum);
+	consoleSetColors(clWhite, clBlack);
 
 	for (int i = 0; i <= 5; i++) {
 
@@ -57,14 +59,20 @@ orderslist *Order_itm_input(orderslist * lastorder) {
 			if (NULL != lastorder) {
 				newodr->prev = lastorder;
 				lastorder->next = newodr;
-
+				
+				
 			}
+			consoleSetColors(clYellow, clBlack);
+			printf("    ORDER SAVED !");
 			return newodr;
+			
 		}
 		else if (yesno == 'n' || yesno == 'N') {
 			delete porder;
 			order_itm_delete(newodr);
 			return lastorder;
+			consoleSetColors(clYellow, clBlack);
+			printf("    ORDER NOT SAVED !");
 
 		}
 	} while (1);

@@ -143,9 +143,12 @@ void Storage::Parse_fstorage(Storage *pstorage, char *string) {
 
 void Storage::Storage_print() {
 	int cabb = ceil(this->cable / 305);
-	consoleSetColors(clWhite, clBlack);
+	
 	posmove(L_FIELD, 15);
+	
+	consoleSetColors(clLightGreen, clBlack);
 	printf("WHAT WE HAVE IN STORAGE:\n\n");
+	consoleSetColors(clWhite, clBlack);
 
 	printf("    %d bullet cams \n\n"
 		"    %d dome cams \n\n"

@@ -236,7 +236,7 @@ void Print_by_storage(orderslist* lastorder, Storage *memstorage) {
 	}
 	else {
 		posmove(4, 15);
-		consoleSetColors(clRed, clWhite);
+		consoleSetColors(clLightGreen,clBlack );
 		printf("NO ORDERS IN SYSTEM ! ");
 	};
 
@@ -252,9 +252,11 @@ void Resultprint(packs *start) {
 		if (pnow->ordpassed == maxq) {
 			int v = 20;
 			posmove(L_FIELD, 15);
-
-			consoleSetColors(clWhite, clBlack);
+			
+			consoleSetColors(clLightGreen, clBlack);
 			printf("THOSE %d ORDERS AVIABLE BY STORAGE RESTS:\n\n",start->ppack->maxfnd);
+			consoleSetColors(clWhite, clBlack);
+
 			collection *pcol = pnow->start;
 			do {
 

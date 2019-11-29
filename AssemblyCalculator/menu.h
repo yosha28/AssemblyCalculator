@@ -76,6 +76,7 @@ public:
 	void Menu_itm_print(pmenu *);
 	int Menu_navigate(pmenu *, bool*);
 	void Free_menu(pmenu*);
+	void Quit_menu(bool *exitflg);
 
 protected:
 

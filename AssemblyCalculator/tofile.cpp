@@ -42,6 +42,7 @@ void Write_to_file(orderslist * lastorder, bool *readflg, char *filename) {
 			} while (start != NULL);
 			
 			posmove(L_FIELD, v);
+			consoleSetColors(clYellow, clBlack);
 			printf("FILE SAVED !");
 		}
 		else {
@@ -52,7 +53,7 @@ void Write_to_file(orderslist * lastorder, bool *readflg, char *filename) {
 	}
 	else {
 		posmove(L_FIELD, 15);
-		consoleSetColors(clWhite, clBlack);
+		consoleSetColors(clYellow, clBlack);
 		printf("NO ORDERS IN SYSTEM !");
 	}
 
