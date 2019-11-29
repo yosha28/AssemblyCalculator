@@ -71,6 +71,8 @@ public:
 	short posY;
 	pmenu *Menu_create();
 	void Menu_print(pmenu *);
+	void menu_print_startsuggestions();
+	void menu_print_name();
 	void Menu_itm_print(pmenu *);
 	int Menu_navigate(pmenu *, bool*);
 	void Free_menu(pmenu*);

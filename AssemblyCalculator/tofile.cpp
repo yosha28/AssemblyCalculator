@@ -128,9 +128,14 @@ orderslist *Read_from_file(orderslist * lastorder, bool *readflg, char *filename
 				} 
 
 				if (isexist == 0) {
+					consoleSetColors(clWhite, clBlack);
+					posmove(L_FIELD, v);
+					printf("Order # %d loaded", lastorder->order->ordernum);
+					v = v + 4;
 					lastorder->next = newodr;
 					newodr->prev = lastorder;
 					lastorder = newodr;
+					
 				}
 				else {
 					delete porder;

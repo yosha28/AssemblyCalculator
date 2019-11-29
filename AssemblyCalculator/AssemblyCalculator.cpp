@@ -5,12 +5,15 @@
 #include "menu.h"
 #include "tofile.h"
 #include "assembly.h"
+#include "storage.h"
+#include "calculator.h"
+
 
 
 int main(int argc, char* argv[])
 {
 
-	setlocale(LC_ALL, ".1251");
+	//setlocale(LC_ALL, ".1251");
 	consoleSetColors(clWhite, clBlack);
 
 	char *abs = argv[0];
@@ -33,14 +36,18 @@ int main(int argc, char* argv[])
 	strcat_s(ordpath, k + 11, "orders.txt");
 	strcat_s(gdspath, k + 10, "goods.txt");
 
+	Storage *memstorage = new Storage;
+	memstorage->Read_to_storage(gdspath, memstorage);
 
 	Menu *topmenu = new Menu;
-
 	orderslist *lastorder = NULL;
 	pmenu *addr = topmenu->Menu_create();
 
 	topmenu->Show_menu_head(topmenu);
 	topmenu->Menu_print(addr);
+	topmenu->menu_print_startsuggestions();
+	topmenu->menu_print_name();
+
 	bool* readflg = new bool(false); //reading file base flag
 	bool* exitflg = new bool(false); 
 
@@ -58,6 +65,16 @@ int main(int argc, char* argv[])
 			system("CLS");
 			topmenu->Show_menu_head(topmenu);
 			lastorder = Read_from_file(lastorder, readflg, ordpath);
+			break;
+		case 4:
+			system("CLS");
+			topmenu->Show_menu_head(topmenu);
+			memstorage->Storage_print();
+			break;
+		case 5:
+			system("CLS");
+			topmenu->Show_menu_head(topmenu);
+			Print_by_storage(lastorder,memstorage);
 			break;
 		case 7:
 			system("CLS");
@@ -81,6 +98,7 @@ int main(int argc, char* argv[])
 	Free_orders(lastorder);  //clear orders
 	topmenu->Free_menu(addr); //clear menus
 
+	delete memstorage;
 	free(abspath);
 	free(ordpath);
 	free(gdspath);

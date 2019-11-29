@@ -152,15 +152,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="assembly.h" />
+    <ClInclude Include="calculator.h" />
     <ClInclude Include="items.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="orderslist.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="storage.h" />
     <ClInclude Include="tofile.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="assembly.cpp" />
     <ClCompile Include="AssemblyCalculator.cpp" />
+    <ClCompile Include="calculator.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="orderslist.cpp" />
     <ClCompile Include="pch.cpp">
@@ -169,7 +172,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="storage.cpp" />
     <ClCompile Include="tofile.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Explanatory note.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

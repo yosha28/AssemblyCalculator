@@ -33,6 +33,12 @@
     <ClInclude Include="tofile.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="storage.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="calculator.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -53,5 +59,14 @@
     <ClCompile Include="tofile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="storage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="calculator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Explanatory note.txt" />
   </ItemGroup>
 </Project>

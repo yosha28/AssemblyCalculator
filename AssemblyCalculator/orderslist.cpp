@@ -238,7 +238,7 @@ void Order::Switch_input(Order* noaddr, int h, int v)
 				noaddr->switchtype[a - 1] = nvrq;
 				a = a / 2;
 			}
-
+			break;
 
 		}
 		else if (yesno == 'y' || yesno == 'y') {
@@ -285,14 +285,16 @@ long Order::Order_number_gen() {
 	return nummer;
 }
 
-
-
 orderslist *Orders_goto_first(orderslist* lastord) {
-	orderslist *result = lastord;
-	while (result->prev != NULL) {
-		result = result->prev;
+	if (lastord != NULL) {
+
+		orderslist *result = lastord;
+		while (result->prev != NULL) {
+			result = result->prev;
+		}
+
+		return result;
 	}
-	return result;
 }
 
 void Camtype_fill(Order* whord, const char *pword) {

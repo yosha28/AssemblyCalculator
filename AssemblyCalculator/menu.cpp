@@ -8,7 +8,7 @@
 //Menu items massive
 const char *menuitems[3][3] = {
 "Orders","Order input","From file",
-"Calculations","By date","By storage",
+"Calculations","Show storage","By storage",
 "Output","To file","Print" };
 
 
@@ -338,7 +338,19 @@ void Menu::Menu_print(pmenu *startaddr) {
 	} while (currentX->nextX != startaddr);
 }
 
+void Menu::menu_print_startsuggestions(){
+	posmove(100, 1);
+	consoleSetColors(clBlack, clMagenta);
+	printf("Use arrow keys to navigate, ENTER to choose         ESC to exit programm");
+}
 
+void Menu::menu_print_name() {
+	posmove(1, 0);
+	consoleSetColors(clBlack, clMagenta);
+	printf("ASSEMBLY");
+	posmove(1, 2);
+	printf("CALCULATOR");
+}
 
 void consoleSetColors(ConsoleColors textColor, ConsoleColors backgroundColor) {  //setting console colors
 	HANDLE hCons = GetStdHandle(STD_OUTPUT_HANDLE);
