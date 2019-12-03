@@ -51,7 +51,7 @@ packs *Bruteforce(orderslist *lastorder, Storage *ms) {
 		}
 		else {
 			packexample = (packs*)malloc(sizeof(packs));
-			packexample->nextpack= NULL;
+			packexample->nextpack = NULL;
 			startpack = packexample;
 		}
 
@@ -74,9 +74,9 @@ packs *Bruteforce(orderslist *lastorder, Storage *ms) {
 			int mso = ms->Get_othercams();
 			int omb = om->Get_bulletcams();
 			int omd = om->Get_domecams();
-			int omo = om->Get_othercams();  
+			int omo = om->Get_othercams();
 
-			if (   omb > msb  // check if any item of OM (order matrix) is topped out MS storage limit
+			if (omb > msb  // check if any item of OM (order matrix) is topped out MS storage limit
 				|| omd > msd
 				|| omo > mso
 				|| (om->reg4) > (ms->reg4)
@@ -237,7 +237,7 @@ void Print_by_storage(orderslist* lastorder, Storage *memstorage) {
 	}
 	else {
 		posmove(4, 15);
-		consoleSetColors(clLightGreen,clBlack );
+		consoleSetColors(clLightGreen, clBlack);
 		printf("NO ORDERS IN SYSTEM ! ");
 	};
 
@@ -245,17 +245,19 @@ void Print_by_storage(orderslist* lastorder, Storage *memstorage) {
 }
 
 void Resultprint(packs *start) {
+	int firstprint = 0;
 	packs *go = start;
 	int maxq = go->ppack->maxfnd;
 
 	while (go != NULL) {
 		Iter *pnow = go->ppack;
-		if (pnow->ordpassed == maxq) {
+		if (pnow->ordpassed == maxq && firstprint == 0) {
 			int v = 20;
+			firstprint = 1;
 			posmove(L_FIELD, 15);
-			
+
 			consoleSetColors(clLightGreen, clBlack);
-			printf("THOSE %d ORDERS AVIABLE BY STORAGE RESTS:\n\n",start->ppack->maxfnd);
+			printf("THOSE %d ORDERS AVIABLE BY STORAGE RESTS:\n\n", start->ppack->maxfnd);
 			consoleSetColors(clWhite, clBlack);
 
 			collection *pcol = pnow->start;
@@ -285,6 +287,7 @@ void Resultprint(packs *start) {
 
 		go = go->nextpack;
 	}
+
 
 }
 

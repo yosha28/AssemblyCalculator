@@ -162,6 +162,7 @@ orderslist *Read_from_file(orderslist * lastorder, bool *readflg, char *filename
 	else {
 		consoleSetColors(clRed, clBlack);
 		printf("                         FILE READ ERROR ! error:%d", fopen_s(&forder, filename, "r"));
+		return NULL;
 	}
 
 	fclose(forder);
