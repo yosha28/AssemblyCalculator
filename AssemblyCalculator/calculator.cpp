@@ -261,6 +261,8 @@ void Resultprint(packs *start) {
 			consoleSetColors(clWhite, clBlack);
 
 			collection *pcol = pnow->start;
+
+			Storage *om = new Storage;
 			do {
 
 				posmove(L_FIELD, v);
@@ -277,11 +279,46 @@ void Resultprint(packs *start) {
 					x = x * 2;
 				}
 				printf("\n");
+
+				pnow->Matrxsumm(om, pcol->po_addr);
+
+
 				pcol = pcol->next;
-				v = v + 4;
+				v = v + 4;				 
 			} while (pcol != NULL);
 
+			int boxc = ceil((om->cable) / 305);
+			int pcsb = ((om->box) / 2);
 
+			printf("\n\n    Total to loading: \n\
+				\n    Bullet cams = %d \
+                \n    Dome cams = %d\
+				\n    Other cams = %d\
+				\n    4x channel Registr = %d\
+				\n    8x channel Registr = %d\
+				\n    16x channel Registr = %d\
+				\n    32x channel Registr = %d\
+				\n    4x channel Poe switch = %d\
+				\n    8x channel Poe switch= %d\
+				\n    16x channel Poe switch = %d\
+				\n    32x channel Poe switch = %d\
+				\n    UTP cat 5e cable packs = %d\
+				\n    2m cable box pcs = %d"
+				,om->Get_bulletcams()
+				,om->Get_domecams()
+			    ,om->Get_othercams()
+				,om->reg4
+				,om->reg8
+				,om->reg16
+				,om->reg32
+				,om->switch4
+				,om->switch8
+				,om->switch16
+				,om->switch32
+				,boxc
+				,pcsb);
+
+					delete (om);
 		}
 
 
