@@ -6,7 +6,7 @@
 //#include "items.h"
 
 
-FILE *forder = NULL;
+FILE *forder = NULL; 
 
 
 void Write_to_file(orderslist * lastorder, bool *readflg, char *filename) {

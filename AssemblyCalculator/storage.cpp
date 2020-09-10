@@ -23,7 +23,7 @@ Storage::Storage()
 	cable = 0;
 	box = 0;
 	hdd = 0;
-
+	 
 };
 
 Storage::~Storage()

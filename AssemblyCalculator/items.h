@@ -3,5 +3,5 @@
 
 const char *camtypes[3] = { "Bullet", "Dome", "other" };
 
-
+ 
 #endif

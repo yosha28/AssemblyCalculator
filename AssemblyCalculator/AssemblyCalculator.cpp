@@ -12,7 +12,7 @@
 
 int main(int argc, char* argv[])
 {
-
+	 
 	//setlocale(LC_ALL, ".1251");
 	consoleSetColors(clWhite, clBlack);
 

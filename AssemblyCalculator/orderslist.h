@@ -21,5 +21,5 @@ orderslist *Orders_goto_first(orderslist *lastord);
 void order_itm_delete(orderslist *newodr);
 void Camtype_fill(Order* whord, const char *pword);
 void Free_orders(orderslist * lastorder);
-
+ 
 #endif

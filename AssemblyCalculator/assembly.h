@@ -26,7 +26,7 @@ public:
 	void (Order::*pfunc[6])(Order*, int, int);
 	long Order_number_gen();
 	
-
+	 
 protected:
 
 	void Cam_quant_input(Order*, int, int);

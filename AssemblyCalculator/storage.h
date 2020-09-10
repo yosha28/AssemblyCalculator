@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include "pch.h"
 
-#define BOX_L 2
+#define BOX_L 2 
 
 class Storage {
 

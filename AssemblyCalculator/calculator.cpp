@@ -14,7 +14,7 @@ Iter::Iter()
 	ordpassed = 0;
 	maxfnd = 0;
 	start = (collection*)malloc(sizeof(collection));
-	start->next = NULL;
+	start->next = NULL; 
 }
 
 Iter::~Iter()

@@ -24,7 +24,7 @@ enum ConsoleColors {      // LRGB LRGB    Light Reg Green Blue
 	, clLightRed = 12  // 0000 1100
 	, clLightMagenta = 13  // 0000 1101
 	, clYellow = 14  // 0000 1110
-	, clWhite = 15  // 0000 1111
+	, clWhite = 15  // 0000 1111 
 };
 
 

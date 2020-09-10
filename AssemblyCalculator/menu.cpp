@@ -10,7 +10,7 @@ const char *menuitems[3][3] = {
 "Orders","Order input","From file",
 "Calculations","Show storage","By storage",
 "Output","To file","Print" };
-
+ 
 
 Menuitm::Menuitm()
 {
