@@ -2,7 +2,7 @@
 #include "assembly.h"
 //#include "items.h"
 
-
+//плроапдлроаплдроапдлроапл
 Order::Order() {
 	ordernum = 0;
 	camcount=0;
